@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Projects</title>
+	<link rel="icon" href="documents/ag-favicon.jpg" type="image/x-icon"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HS2wUBOZBtOx8I4CGHp4XAMp4HhVzpj5IS5i5r5rMkYc7AZCZi8uF7VQXuc/hE+7gQ80GcwWzRFTfLwPYF/h1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <style>
+		.project {
+			margin-top: 50px;
+            margin-bottom: 50px;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			box-shadow: 0 2px 4px rgba(0,0,0,.2);
+			transition: box-shadow 0.3s;
+			cursor: pointer;
+		}
+		.project:hover {
+			box-shadow: 0 4px 8px rgba(0,0,0,.2);
+		}
+        h1{
+            padding-top: 75px;
+            padding-bottom: 50px;
+        }
+		.project h2 {
+            margin: 0;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+		}
+		.project p {
+			margin: 10px 0;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+		}
+		.github-link {
+			margin-top: 10px;
+		}
+	</style>
+</head>
+<body>
+    <header>
+		<nav>
+			<ul>
+			  <li><a href="index.html"><i class="fas fa-home"></i> HOME</a></li>
+			  <li><a href="index.html"><i class="fas fa-info-circle"></i> ABOUT</a></li>
+			  <li><a href="index.html"><i class="fas fa-briefcase"></i> PORTFOLIO</a></li>
+			  <li><a href="index.html"><i class="fas fa-envelope"></i> CONTACT</a></li>
+			</ul>
+		  </nav>
+	</header>
+	<div class="container">
+		<h1>My Projects</h1>
+		<div id="github-projects"></div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script>
+	<script>
+		$.ajax({
+			url: "https://api.github.com/users/altaygokmn/repos",
+			dataType: "json",
+			success: function(data) {
+				var html = "";
+				for (var i = 0; i < data.length; i++) {
+					html += '<div class="project" data-url="' + data[i].html_url + '">';
+					html += '<h2>' + data[i].name + '</h2>';
+					html += '<p>' + data[i].description + '</p>';
+					html += '<div class="github-link"><a href="' + data[i].html_url + '" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>';
+					html += '</div>';
+				}
+				$("#github-projects").html(html);
+
+				$(".project").click(function() {
+                    window.open($(this).data("url"));
+				});
+			}
+		});
+	</script>
+	<footer>
+		<div class="container">
+			<p>Copyright &copy; 2023 Altay Gökmen | All Rights Reserved.</p>
+		</div>
+	</footer>
+</body>
+</html>
+
